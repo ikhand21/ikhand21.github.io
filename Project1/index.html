@@ -16,12 +16,16 @@
             border: 3px solid #1f2156bb;
             background: rgba(202, 196, 206, .3);
         }
+        .grid.grid-fin {
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        }
+
         .grid {
             display: grid;
-    		gap: 18px;
-    		margin: 30px 0 10px;
-    		grid-template-columns: repeat(2, 1fr));
-		}
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin: 30px 0 10px;
+        }
         .card {
             background: #c4bbff;
             border: 3px solid #1f2156bb;
@@ -42,21 +46,21 @@
         <p>
            Part 1 uses the simplest approach to align the three color channels R, G, and B: exhaustively search over a window of displacements. Each matching is scored with some image matching metric, with the best one stored and outputted. For my approach, I used Normalized Cross-Correlation (NCC), which calculates the dot product between two normalized vectors representing the two images being aligned. Using B's brightness as reference, the displacement was calculated separately between B vs R, and B vs G, resulting in a (x, y) displacement vector for R and G noting the exact shift to produce the final image. This approach assumes the best overlap is the one with the least difference in brightness values between the R, G, B color channels. This worked well for small images, where a large enough window of displacements can be checked in a relatively reasonable amount of time. 
         </p>
-        <div class="grid">
+        <div class="grid grid-fin">
         	<figure class="card">
-    			<img src="./media/out_monastery.jpg" alt="Monastary, simple approach" max-width:300px; max-height:300px; width: auto; height: auto; style="display: block;">  
+    			<img src="./media/out_monastery.jpg" alt="Monastary, simple approach" max-width:100%; height: auto; style="display: block;">  
                 <figcaption>
-                	<h4> Monastery.jpg </h4>
+                	<h4> monastery.jpg </h4>
                     <p> Red: (x, y), Green: (x, y) </p>
                 </figcaption>
             </figure>
-            <figure class="card">
-        		<img src="./media/out_cathedral.jpg" alt="Cathedral, simple approach" width="248" height="320" style="display: block;">  
+        	<figure class="card">
+    			<img src="./media/out_cathedral.jpg" alt="Cathedral, simple approach" max-width:100%; height: auto; style="display: block;">  
                 <figcaption>
-                	<h4> Cathedral.jpg </h4>
+                	<h4> cathedral.jpg </h4>
                     <p> Red: (x, y), Green: (x, y) </p>
                 </figcaption>
-             </figure>
+            </figure>
             
       	</div>
     </section>
