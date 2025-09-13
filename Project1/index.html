@@ -43,7 +43,7 @@
     <section class = 'section'>
         <h2> Part 1: Single-Scale Alignment </h2>
         <p>
-           Part 1 uses the simplest approach to align the three color channels R, G, and B: exhaustively search over a window of displacements. Each matching is scored with some image matching metric, with the best one stored and outputted. For my approach, I used Normalized Cross-Correlation (NCC), which calculates the dot product between two normalized vectors representing the two images being aligned. Using B's brightness as reference, the displacement was calculated separately between B vs R, and B vs G, resulting in a (x, y) displacement vector for R and G noting the exact shift to produce the final image. This approach assumes the best overlap is the one with the least difference in brightness values between the R, G, B color channels. This worked well for small images, where a large enough window of displacements can be checked in a relatively reasonable amount of time. 
+           This part uses the simplest approach to align the three color channels R, G, and B: exhaustively search over a window of displacements. Each matching is scored with some image matching metric, with the best one stored and outputted. For my approach, I used Normalized Cross-Correlation (NCC), which calculates the dot product between two normalized vectors representing the two images being aligned. Using B's brightness as reference, the displacement was calculated separately between B vs R, and B vs G, resulting in a (x, y) displacement vector for R and G noting the exact shift to produce the final image. This approach assumes the best overlap is the one with the least difference in brightness values between the R, G, B color channels. This worked well for small images, where a large enough window of displacements can be checked in a relatively reasonable amount of time. 
         </p>
         <div class="grid grid-fin">
         	<figure class="card">
@@ -69,6 +69,111 @@
             </figure>
       	</div>
     </section>
-
+    <section class = 'section'>
+        <h2> Part 2: Multi-scale pyramid alignment </h2>
+        <p>
+           tbd
+        </p>
+        <div class="grid grid-fin">
+            <figure class="card">
+    			<img src="./media/out_monastery.jpg" alt="monastary, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> monastery.jpg </h4>
+                    <p> Red: (3, 2), Green: (-3, 2) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_cathedral.jpg" alt="cathedral, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> cathedral.jpg </h4>
+                    <p> Red: (12, 3), Green: (5, 2) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_tobolsk.jpg" alt="tobolsk, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> tobolsk.jpg </h4>
+                    <p> Red: (6, 3), Green: (3, 2) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_church.jpg" alt="emir, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> church.tif </h4>
+                    <p> Red: (57, -6), Green: (24, -11) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_emir.jpg" alt="emir, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> emir.tif </h4>
+                    <p> Red: (104, 40), Green: (49, 24) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_harvesters.jpg" alt="harvesters, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> harvesters.tif </h4>
+                    <p> Red: (124, 13), Green: (60, 16) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_icon.jpg" alt="icon, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> icon.tif </h4>
+                    <p> Red: (89, 23), Green: (41, 17) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_italil.jpg" alt="italil, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> italil.tif </h4>
+                    <p> Red: (77, 35), Green: (38, 21) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_lastochikino.jpg" alt="lastochiniko, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> lastochiniko.tif </h4>
+                    <p> Red: (76, -9), Green: (-3, -2) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_lugano.jpg" alt="lugano, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> lugano.tif </h4>
+                    <p> Red: (93, -28), Green: (41, -14) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_melons.jpg" alt="melons, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> melons.tif </h4>
+                    <p> Red: (177, 11), Green: (82, 9) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_self_portrait.jpg" alt="self portrait, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> self_portrait.tif </h4>
+                    <p> Red: (170, -6), Green: (78, 26) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_siren.jpg" alt="siren, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> siren.tif </h4>
+                    <p> Red: (97, -25), Green: (49, -7) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+    			<img src="./media/out_three_generations.jpg" alt="three generations, pyramid approach" max-width:100%; height: auto; style="display: block;">  
+                <figcaption>
+                	<h4> three_generations.tif </h4>
+                    <p> Red: (110, 9), Green: (53, 12) </p>
+                </figcaption>
+            </figure>
+        </div>
+    </section>
 </body>
 </html>
