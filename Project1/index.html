@@ -1,17 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project 0</title>
+    <title>Project 1</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Verdana, sans-serif;
             margin: 20px;
         }
     </style>
+    <style>
+        .section {
+            margin: 16px 0 16px;
+            padding: 16px;
+            border-radius: 24px;
+            border: 3px solid #1f2156bb;
+            background: rgba(202, 196, 206, .3);
+        }
+        .grid {
+            display: grid
+    		gap: 18px;
+    		margin: 30px 0 10px;
+    		grid-template-columns: repeat(3, 1fr));
+		}
+        .card {
+            background: #c4bbff;
+            border: 3px solid #1f2156bb;
+            border-radius: 24px;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+    
 </head>
 <body>
     <header>
-        <h1>Project 0</h1>
+        <h1 style="color: rgb(36, 32, 56);">Project 1: Colorizing the Prokudin-Gorskii Photo Collection</h1>
     </header>
+    <section class = 'section'>
+        <h2> Part 1: Single-Scale Alignment </h2>
+        <p>
+           Part 1 uses the simplest approach to align the three color channels R, G, and B: exhaustively search over a window of displacements. Each matching is scored with some image matching metric, with the best one stored and outputted. For my approach, I used Normalized Cross-Correlation (NCC), which calculates the dot product between two normalized vectors representing the two images being aligned. Using B's brightness as reference, the displacement was calculated separately between B vs R, and B vs G, resulting in a (x, y) displacement vector for R and G noting the exact shift to produce the final image. This approach assumes the best overlap is the one with the least difference in brightness values between the R, G, B color channels. This worked well for small images, where a large enough window of displacements can be checked in a relatively reasonable amount of time. 
+        </p>
+        <div class="grid">
+        	<figure class="card">
+    			<img src="./media/Part1_Monastery.jpg" alt="Monastary, simple approach" width="248" height="320" style="display: block;">  
+                <figcaption>
+                	<h4> Monastery.jpg </h4>
+                    <p> Red: (x, y), Green: (x, y) </p>
+                </figcaption>
+            </figure>
+            <figure class="card">
+        		<img src="./media/Part1_Cathedral.jpg" alt="Cathedral, simple approach" width="248" height="320" style="display: block;">  
+                <figcaption>
+                	<h4> Cathedral.jpg </h4>
+                    <p> Red: (x, y), Green: (x, y) </p>
+                </figcaption>
+             </figure>
+            
+      	</div>
+    </section>
+
 </body>
 </html>
