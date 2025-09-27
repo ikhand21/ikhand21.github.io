@@ -75,13 +75,13 @@ To turn this into an edge image, lets binarize the gradient magnitude image by p
   </p>
 <ul>
   <li>
-	<img src="./media/gauss.png">   
+	gaussian: <br> <img src="./media/gauss.png">   
   </li>
   <li>
-	<img src="./media/gauss_dx.png">   
+	DoGx: <br> <img src="./media/gauss_dx.png">   
   </li>
   <li>
-	<img src="./media/gauss_dy.png">   
+	DoGy: <br> <img src="./media/gauss_dy.png">   
   </li>
 </ul>
 
@@ -97,16 +97,14 @@ Let's derive the unsharp masking technique. As mentioned, the Gaussian filter is
 <br>
 <center>
 
-<img src="./files/taj.jpg" alt="taj"><br>
+Original image (Taj Mahal): <br> <img src="./media/taj.jpg"><br>
 IMAGE blurred taj
-<img src="./files/taj.jpg" alt="taj"><br>
-IMAGE sharpened blurred taj
+Sharpened image: <br> <img src="./media/sharpened_taj.jpg"><br>
+Difference Between original and sharpened: <br> <img src="./media/sharpened_taj_dif.jpg"><br>
 
-IMAGE cat
-IMAGE blurred cat
-IMAGE sharpened taj
-IMAGE sharpened blurred taj
-
+Original image (my cat): <br> <img src="./media/cat.jpg"><br>
+Blurred image: <br> <img src="./media/blurred_cat.jpg"><br>
+Blurred and Sharpened image: <br> <img src="./media/blurred_sharpened_cat.jpg"><br>
 </center>
 
 <h3>Part 2.2: Hybrid Images</h3>
@@ -125,24 +123,23 @@ to dominate our perception when it is available, but, at a distance, only the lo
   Here are my results for a few different attempts. For two trials, I tried to recreate old pictures of me as a kid, then hybridized the results. I might have succeeded too well, as the pictures happened to look very similar, making the hybrid effect harder to see. (This may also just be because I am both people).  
   <br>
   <br>
-  IMAGE DEREK, IMAGE HYBRID, IMAGE DEREKS CAT
+  IMAGE DEREK, <img src="./media/out_hybrid3">, IMAGE DEREKS CAT
   <br>
-  IMAGE ME, IMAGE ME_HYBRID, IMAGE ME_KID
+  IMAGE ME, <img src="./media/out_hybrid2">, IMAGE ME_KID
   <br>
-  IMAGE ME2, IMAGE ME_HYBRID_2, IMAGE ME_KID_2
+  IMAGE ME2, <img src="./media/out_hybrid1">, IMAGE ME_KID_2
 <br>
 <br>
 Lets conduct frequency analysis on this last one.
 </p>
 <ul>  
-  <li>IMAGE log magnitude of the Fourier transform of the two input images
+  <li> <img src="./media/imput_image1"> <img src="./media/imput_image2">
   </li> 
   <li> 
-  IMAGE " filtered image1, filtered image2 
+	<img src="./media/filtered_im1"> <img src="./media/filtered_im2">
   </li>
   <li> 
-  IMAGE " hybrid image 
-  </li>
+	<img src="./media/hybrid_im">  </li>
 </ul>
 
 <h3>Multi-resolution Blending and the Oraple journey</h3>
@@ -168,10 +165,10 @@ Lets take an image of an apple and orange, to ultimately blend together. This is
 </p>
 <ul>
   <li>
-  IMAGE orange stacks
+	<img src="./media/orange_stacks"> 
   </li>
   <li>
-  IMAGE apple stacks
+	<img src="./media/apple_stacks"> 
   </li>
 </ul>
 
@@ -184,16 +181,15 @@ To do this we need to decompose each image into their Gaussian and Laplacian sta
   <li>  
   At each step, we combine the images, to create a resulting Laplacian stack that can then be collapsed by adding each level together (this includes the final image from the gaussian stacks) </li>
   <li> 
-  Here's a simple one with a horizontal seam. 
-  IMAGE leaf1, leaves, leaf2
+  Here's a simple one with a horizontal seam. <br>
+	<img src="./media/leaves"> 
   </li>
   <li>
-  Here's one with quite an irregular mask shape
-  IMAGE penguin, pchess, chess
+  Here's one with quite an irregular mask shape <br>
+	  <img src="./media/penguin"> <img src="./media/chess"> <img src="./media/circle_mask"> <br> <img src="./media/pchess">
   </li>
   <li>
-  And finally, the iconic oraple. 
-  IMAGE orange, oraple, apple
-  </li>
+  And finally, the iconic oraple. <br>
+	<img src="./media/orange"> <img src="./media/apple"> <br> <img src="./media/oraple">  </li>
 </ul>
 
