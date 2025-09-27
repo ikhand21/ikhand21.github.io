@@ -27,13 +27,16 @@ Let's compare these with a built-in convolution function
 </p>
 <ul>
   <li>
-	9x9 box filter: IMAGE selfie with box filter  
+	9x9 box filter: <img src="./media/selfie_box.png">
   </li>
   <li>
-	<b>D<sub>x</sub></b>: IMAGE selfie with Dx
+	<b>D<sub>x</sub></b>: <img src="./media/selfie_dx.png">
   </li>
   <li>
-	<b>D<sub>y</sub></b>: IMAGE selfie with Dy
+	<b>D<sub>y</sub></b>: <img src="./media/selfie_dy.png">
+  </li>
+  <li>
+  FOr all of these, the scipy function was much faster, with both naive approaches being much slower. The four loop approach was much slower though. For example, the box filter took .1s with scipy's convolution function, with my four loop approach took 36s and my two loop approach took 3.5s. I also found that for the box filter, there were minute differences with order of magnitude 10^-15 between the naive convolution and scipy's. The other two were exact.  
   </li>
 </ul>
 
@@ -44,15 +47,15 @@ Let's compare these with a built-in convolution function
 
 Now, lets look at this cameraman image. We can show the partial derivative in x and y of the  image by convolving it with <b>D_x</b> and <b> D_y </b>. This is done below.
 <br>
-IMAGE cameraman with Dx, cameraman with Dy
+IMAGE dx: <img src="./media/cameraman_dx.png"> dy: <img src="./media/cameraman_dy.png">
 <br>
 Using this, we can calculate the gradient magnitude image as follows. 
 <br>
-IMAGE cameraman grad mag
+IMAGE <img src="./media/cameraman_grad_mag.png">
 <br>
 To turn this into an edge image, lets binarize the gradient magnitude image by picking the appropriate threshold. I considered both the outline of the cameraman and the outline of the buildings as "real edges", so I tried to balance the noise with these signals.  
 <br>
-IMAGE cameraman line image 1 
+IMAGE <img src="./media/cameraman_grad_mag_binarized.png">
 <br>
 
 <h3>Part 1.3: Derivative of Gaussian (DoG) Filter</h3>
@@ -62,16 +65,9 @@ IMAGE cameraman line image 1
 </p>  
 <ul>
   <li>
-    IMAGE gauss cameraman with Dx
+    cameraman convolved with gaussian <img src="./media/gauss_cameraman_dx.png"> 
   </li>
-  <li>
-  	IMAGE gauss cameraman with Dy
-  </li>
-  <li>
-  	IMAGE gauss cameraman grad mag
-  </li>
-  <li>
-  	IMAGE cameraman line image 1 
+  	edge image of cameraman: <img src="./media/gauss_cameraman_grad_mag.png"> 
   </li>
 </ul>
   <p class="text">
@@ -79,13 +75,13 @@ IMAGE cameraman line image 1
   </p>
 <ul>
   <li>
-  	IMAGE gauss
+	<img src="./media/gauss.png">   
   </li>
   <li>
-    IMAGE gauss with Dx
+	<img src="./media/gauss_dx.png">   
   </li>
   <li>
-  	IMAGE gauss with Dy
+	<img src="./media/gauss_dy.png">   
   </li>
 </ul>
 
@@ -96,7 +92,7 @@ IMAGE cameraman line image 1
 <div align="left">
   <p class="text">
 
-Let's derive the unsharp masking technique. As mentioned, the Gaussian filter is a low pass filter that retains only the low frequencies. We can subtract the blurred version from the original image to get the high frequencies of the image. Adding this back in emphasizes the higher frequencies more, which is interpreted as a sharper image. We can combine this into a single convolution operation which is called the unsharp mask filter. Applying this filter to a blurry image adds no extra information, but can fool one into thinking there is more detail. Here is what this looks like applied to a couple images: 
+Let's derive the unsharp masking technique. As mentioned, the Gaussian filter is a low pass filter that retains only the low frequencies. We can subtract the blurred version from the original image to get the high frequencies of the image. Adding this back in emphasizes the higher frequencies more, which is interpreted as a sharper image. We can combine this into a single convolution operation which is called the unsharp mask filter. Applying this filter to a blurry image adds no extra information, but can fool one into thinking there is more detail. FOr the Taj Mahal, I used sigma = 1, which allows for minimal edges added. For my cat, I used sigma = 5 to increase the edges captured and enhanced. Here is what this looks like: 
 </div>
 <br>
 <center>
@@ -201,3 +197,4 @@ To do this we need to decompose each image into their Gaussian and Laplacian sta
   IMAGE orange, oraple, apple
   </li>
 </ul>
+
