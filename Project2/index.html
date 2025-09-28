@@ -50,7 +50,7 @@ Let's compare these with a built-in convolution function
 
 Now, lets look at this cameraman image. We can show the partial derivative in x and y of the  image by convolving it with <b>D_x</b> and <b> D_y </b>. This is done below, respectively.
 <br>
-<img src="./media/cameraman_dx.png"> <img src="./media/cameraman_dy.png" style="max-height: 300px; width: auto;">
+<img src="./media/cameraman_dx.png" style="max-height: 300px; width: auto;"> <img src="./media/cameraman_dy.png" style="max-height: 300px; width: auto;">
 <br>
 Using this, we can calculate the gradient magnitude image as follows. 
 <br>
@@ -96,9 +96,7 @@ To turn this into an edge image, lets binarize the gradient magnitude image by p
   <p class="text">
 
 Let's derive the unsharp masking technique. As mentioned, the Gaussian filter is a low pass filter that retains only the low frequencies. We can subtract the blurred version from the original image to get the high frequencies of the image. Adding this back in emphasizes the higher frequencies more, which is interpreted as a sharper image. We can combine this into a single convolution operation which is called the unsharp mask filter. Applying this filter to a blurry image adds no extra information, but can fool one into thinking there is more detail. FOr the Taj Mahal, I used sigma = 1, which allows for minimal edges added. For my cat, I used sigma = 5 to increase the edges captured and enhanced. Here is what this looks like: 
-</div>
 <br>
-<center>
 
 Original image (Taj Mahal): <br> <img src="./media/taj.png" style="max-height: 300px; width: auto;"><br>
 Sharpened image: <br> <img src="./media/sharpened_taj.png" style="max-height: 300px; width: auto;"><br>
@@ -107,7 +105,7 @@ Difference Between original and sharpened: <br> <img src="./media/sharpened_taj_
 Original image (my cat): <br> <img src="./media/cat.png" style="max-height: 300px; width: auto;"><br>
 Blurred image: <br> <img src="./media/blurred_cat.png" style="max-height: 300px; width: auto;"><br>
 Blurred and Sharpened image: <br> <img src="./media/blurred_sharpened_cat.png" style="max-height: 300px; width: auto;"><br>
-</center>
+</div>
 
 <h3>Part 2.2: Hybrid Images</h3>
 <p class="text">
@@ -129,13 +127,13 @@ to dominate our perception when it is available, but, at a distance, only the lo
   <br>
 	Hybrid: <br><img src="./media/out_hybrid3.jpg" style="max-height: 300px; width: auto;">,
   <br>
-  Original Images: <br><img src="./media/me_as_kid1.jpg" style="max-height: 300px; width: auto;">, <img src="./media/me_kid.JPG" style="max-height: 300px; width: auto;">
+  Original Images: <br><img src="./media/me_as_kid_3.jpg" style="max-height: 300px; width: auto;">, <img src="./media/me_kid_4.jpg" style="max-height: 300px; width: auto;">
   <br>
 	Hybrid: <br><img src="./media/out_hybrid2.jpg" style="max-height: 300px; width: auto;">
   <br>
-  Original Images: <br><img src="./media/me_as_kid3.jpg" style="max-height: 300px; width: auto;">, <img src="./media/me_kid4.jpg" style="max-height: 300px; width: auto;">
+  Original Images: <br><img src="./media/me_as_kid1.jpg" style="max-height: 300px; width: auto;">, <img src="./media/me_kid.JPG" style="max-height: 300px; width: auto;">
 	<br>
-	Hybrid: <br><img src="./media/out_hybrid1.jpg">,
+	Hybrid: <br><img src="./media/out_hybrid1.jpg" style="max-height: 300px; width: auto;">,
 <br>
 <br>
 Lets conduct frequency analysis on this last one. 
@@ -170,16 +168,11 @@ Lets conduct frequency analysis on this last one.
 Let's implement a Gaussian and a Laplacian <strong>stack</strong>. In a stack the images are never downsampled so the results are all the same dimension as the original image, and can all be saved in one 3D matrix (if the original image was a grayscale image). To create the successive levels of the Gaussian Stack, we apply the Gaussian filter at each level, with no subsampling.
 <br>
 <br>
-Lets take an image of an apple and orange, to ultimately blend together. This is what their Gaussian and Laplacian stacks look like.	
+Lets take an image of an orange and apple, to ultimately blend together. This is what their Gaussian and Laplacian stacks look like. 
+	<br>In order: Orange gaussian stack, Orange laplacian stack, Apple gaussian stack, Apple laplacian stack <br>
+<img src="./media/orange_stacks.png" style="max-height: 300px; width: auto;"> 
+<img src="./media/apple_stack.png" style="max-height: 300px; width: auto;"> 
 </p>
-<ul>
-  <li>
-	<img src="./media/orange_stacks.png" style="max-height: 300px; width: auto;"> 
-  </li>
-  <li>
-	<img src="./media/apple_stack.png" style="max-height: 300px; width: auto;"> 
-  </li>
-</ul>
 
 <h3 align="left">Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
 <p class="text">
@@ -191,15 +184,15 @@ To do this we need to decompose each image into their Gaussian and Laplacian sta
   At each step, we combine the images, to create a resulting Laplacian stack that can then be collapsed by adding each level together (this includes the final image from the gaussian stacks) </li>
   <li> 
   Here's a simple one with a horizontal seam. <br>
-	<img src="./media/leaves.png" style="transform: rotate(90deg); max-height: 300px; width: auto;">> 
+	<img src="./media/leaves.png" style=" margin-left: 50px; transform: rotate(90deg); max-height: 300px; width: auto;">> 
   </li>
   <li>
   Here's one with quite an irregular mask shape <br>
-	  <img src="./media/penguin.jpg" style="max-height: 300px; width: auto;"> <img src="./media/chess.jpg" style="max-height: 300px; width: auto;"> <img src="./media/circle_mask.jpg" style="max-height: 300px; width: auto;"> 
+	  <img src="./media/chess.jpg" style="max-height: 150px; width: auto;"> <img src="./media/penguin.jpg" style="max-height: 150px; width: auto;"> <img src="./media/circle_mask.jpg" style="max-height: 150px; width: auto;"> 
 	  <br> <img src="./media/pchess.png" style="max-height: 300px; width: auto;">
   </li>
   <li>
   And finally, the iconic oraple. <br>
-	<img src="./media/orange.jpeg" style="max-height: 300px; width: auto;"> <img src="./media/apple.jpeg" style="max-height: 300px; width: auto;"> <br> <img src="./media/oraple.png" style="max-height: 300px; width: auto;">  </li>
+	<img src="./media/orange.jpeg" style="max-height: 150px; width: auto;"> <img src="./media/apple.jpeg" style="max-height: 150px; width: auto;"> <br> <img src="./media/oraple.png" style="max-height: 300px; width: auto;">  </li>
 </ul>
 
