@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS180: Project 3</title>
+<link rel="StyleSheet" href="./files/style.css" type="text/css" media="all">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
+<center>
+<h1>Image Warping and Mosaicing</h1>
+</center>
+
+<h3>Part A.1: Pictures with the same Center of Projection </h3>
+
+<p class="text">
+  To mosaic images together, we want to shoot photographs that only recieve some subset of rays from some identical total set of rays. This allows the transforms between the images' perspectives to be projective. Most commonly, this can be done by fixing the center of projection of the camera and only allowing rotations about an axis between photos.    
+  Below are a few set of photos where I attempt to retain this relation. 
+  <br>
+  <br>
+  Golden Gate Bridge: <br>
+  <img src="TODO" style="max-height: 300px; width: auto;">
+  <br>
+  <br>
+  View from McCone Balcony: <br>
+  <img src="TODO" style="max-height: 300px; width: auto;">
+  <br>
+</p>
+
+<h3>Part A.2: Recovering Homographies </h3>
+<p class="text">
+  The transformation beteen these images can be written as homography H, a 3x3 matrix with 8 degrees of freedom. 
+  So, in transforming one image's projective plane, p, to another, p', we have that p' = Hp. 
+  To recover H, we need atleast 4 correspondences between p and p'. For now, I will be establishing the correspondences by hand. 
+  To reduce error, I will be selecting far more than 4. Since this is an overdetermined system of equations, I will use Least Squares to find the best solution using all the points. 
+  The system of equations for n correspondences follows the format Ah = b, where A is a matrix of form (2n, 8), where each set of two rows sets the equation for the corresponding (x, y) pairs of a correspondence. 
+  h is an (8, 1) vector for each of the eight values we need to determine in H. b is (2n, 1), holding the respective x' and y'. The full form is below: 
+  <img src="TODO (from ipad)" style="max-height: 300px; width: auto;">
+  <br>
+  <br>
+  Lets see how this works out for select pairs of photos from my two sets: 
+  <br>
+  <br>
+  Golden Gate Bridge:
+</p>
+<ul>
+	<li>
+  	Correspondences: <br>
+    <img src="TODO: correspondences" style="max-height: 300px; width: auto;">
+  </li>
+  <li>
+  	Final Homography: <br>
+    <img src="TODO: homography" style="max-height: 300px; width: auto;">
+  </li>
+</ul>
+<p>
+    McCone Balcony:
+</p>
+<ul>
+	<li>
+  	Correspondences: <br>
+    <img src="TODO: correspondences" style="max-height: 300px; width: auto;">
+  </li>
+  <li>
+  	Final Homography: <br>
+    <img src="TODO: homography" style="max-height: 300px; width: auto;">
+  </li>
+</ul>
+
+<h3>Part A.3: Warping Images </h3>
+<p class="text">
+  Now that I know the parameters of the homography, I can use this homography to warp each image towards the reference image- lets consider the second image the reference.
+  First, I pass the corners through a forward pass to determine the boundaries of the final image. With these dimensions known, I can switch to inverse warping to avoid holes in the output image. 
+  To do this, I first apply a gaussian filter to the original image, so points sampled reflect a general neighborhood. Then, with each 'inverse pass', I calculate the source of warped coordinates x', y'. I interpolate to determine the relevant values to assign to x', y'.
+  For interpolation, I implemented both Nearest Neighbors (Round coordinates to the nearest pixel value) and Bilinear Interpolation (Use weighted average of four neighboring pixels). Only values that pass to x, y coordinates within the bounds of the original photo are assigned to warped coordinates. Thus, during this process, we can create an alpha mask, which simply marks whether each point in the warped image has valid values.    
+  <br>
+  I tested this code and both forms of interpolation by 'rectifying' images with warped squares/rectangles. Here is how that turned out:
+  <br>
+  Ice_cream Plate: <br>
+  <img src="TODO icecream square" style="max-height: 300px; width: auto;">
+  <br>
+  Another One: <br>
+  <img src="TODO another one" style="max-height: 300px; width: auto;">
+  <br>
+  <br>
+  Since it seems to be working, lets also see how this works out for my pairs of photos from before:
+  <br>
+  Golden Gate Bridge: <br>
+  <img src="TODO GG warped" style="max-height: 300px; width: auto;">
+  <br>
+  <br>
+  McCone Balcony: <br>
+  <img src="TODO McCone warped" style="max-height: 300px; width: auto;">
+</p>
+
+<h3>Part A.4: Blending Images </h3>
+<p class="text">
+  Lets finally blend them together. After sizing a final canvas to fit both images, I can use the alpha masks to blend together the two images. For these images, a weighted average (feathering) seems to wrok well enough, so further refinements were not attempted. Here are the final images (so far)!
+  <br>
+  Golden Gate Bridge: <br>
+  <img src="TODO GG final + source" style="max-height: 300px; width: auto;">
+  <br>
+  <br>
+  McCone Balcony #1: <br>
+  <img src="TODO McCone final + source" style="max-height: 300px; width: auto;">
+  <br>
+  <br>
+  McCone Balcony #2: <br>
+  <img src="TODO McCone final + source" style="max-height: 300px; width: auto;">
+</p> 
+  
+  
