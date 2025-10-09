@@ -44,7 +44,7 @@
   To reduce error, I will be selecting far more than 4. Since this is an overdetermined system of equations, I will use Least Squares to find the best solution using all the points. 
   The system of equations for n correspondences follows the format Ah = b, where A is a matrix of form (2n, 8), where each set of two rows sets the equation for the corresponding (x, y) pairs of a correspondence. 
   h is an (8, 1) vector for each of the eight values we need to determine in H. b is (2n, 1), holding the respective x' and y'. The full form and derivation is below: <br>
-  <img src="./media/syst_eq.jpg" style="max-height: 300px; width: auto;">
+  <img src="./media/syst_eq.jpg" style="max-height: 450px; width: auto;">
   <br>
   <br>
   Lets see how this works out for select pairs of photos from my two sets: 
@@ -72,7 +72,7 @@
   </li>
   <li>
   	Final Homography: <br>
-    <img src="./media/mccone_matrix.png" style="max-height: 180px; width: auto;">
+    <img src="./media/mccone_matrix.png" style="max-height: 100px; width: auto;">
   </li>
 </ul>
 
@@ -81,36 +81,39 @@
   Now that I know the parameters of the homography, I can use this homography to warp each image towards the reference image- lets consider the second image the reference.
   First, I pass the corners through a forward pass to determine the boundaries of the final image. With these dimensions known, I can switch to inverse warping to avoid holes in the output image. 
   To do this, I first apply a gaussian filter to the original image, so points sampled reflect a general neighborhood. Then, with each 'inverse pass', I calculate the source of warped coordinates x', y'. I interpolate to determine the relevant values to assign to x', y'.
-  For interpolation, I implemented both Nearest Neighbors (Round coordinates to the nearest pixel value) and Bilinear Interpolation (Use weighted average of four neighboring pixels). Only values that pass to x, y coordinates within the bounds of the original photo are assigned to warped coordinates. Thus, during this process, we can create an alpha mask, which simply marks whether each point in the warped image has valid values.    
+  For interpolation, I implemented both Nearest Neighbors (NN: Round coordinates to the nearest pixel value) and Bilinear Interpolation (BL: Use weighted average of four neighboring pixels). Only values that pass to x, y coordinates within the bounds of the original photo are assigned to warped coordinates. Thus, during this process, we can create an alpha mask, which simply marks whether each point in the warped image has valid values.    
   <br>
-  I tested this code and both forms of interpolation by 'rectifying' images with warped squares/rectangles. Here is how that turned out:
+  I tested this code and both forms of interpolation by 'rectifying' images with warped squares/rectangles. In all samples below, the results from using NN and BL look very similar. Using NN was usually faster, taking about 75% of the time BL took. For some reason, BL was faster for the Golden Gate Bridge. Overall, it personally didn't feel much faster to use NN even though theoretically the computation is far less. It likely is due to a slower implementation for the overall code that dominated over the speed of the actual interpolation.
+  <br> Here is how that turned out (original, warped using NN, warped using BL):
   <br>
-  Ice_cream Plate, corresponding with a square with coordi: items that were flat relatove to the plate (like the chocolate sauce and fork) transformed pretty clearly, compared to the ice cream, as expected. <br>
-  <img src="./media/ice_og.png" style="max-height: 300px; width: auto;"> <img src="./media/ice_final.png" style="max-height: 300px; width: auto;"> <img src="./media/ice_final2.png" style="max-height: 300px; width: auto;">
+  <br>
+  Ice_cream Plate, corresponding with a 100x100 pixel square: items that were flat relative to the plate (like the chocolate sauce and fork) transformed pretty clearly, compared to the ice cream, as expected. <br>
+  <img src="./media/ice_og.png" style="max-height: 300px; width: auto;"> <img src="./media/ice_finalNN.png" style="max-height: 300px; width: auto;"> <img src="./media/ice_final.png" style="max-height: 300px; width: auto;">
   <br>
   Another One: <br>
   <img src="TODO another one" style="max-height: 300px; width: auto;">
   <br>
   <br>
   Since it seems to be working, lets also see how this works out for my pairs of photos from before:
+  <br> 
   <br>
   Golden Gate Bridge: <br>
-  <img src="./media/bridge_1.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/bridge_warped.png" style="max-height: 300px; width: auto;">  <br>
+  <img src="./media/bridge_1.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/bridge_warped.png" style="max-height: 300px; width: auto;">  <img src="./media/bridge_warped_BL.png" style="max-height: 300px; width: auto;"><br>
   <br>
   McCone Balcony: <br>
-  <img src="./media/mccone_1.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/balcony_warped.png" style="max-height: 300px; width: auto;">  <br>
+  <img src="./media/mccone_1.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/balcony_warped.png" style="max-height: 300px; width: auto;">  <img src="./media/balcony_warped_BL.png" style="max-height: 300px; width: auto;"><br>
 </p>
 
 <h3>Part A.4: Blending Images </h3>
 <p class="text">
-  Lets finally blend them together. After sizing a final canvas to fit both images, I can use the alpha masks to blend together the two images. For these images, a weighted average (feathering) seems to work well enough, so further refinements were not attempted. Here are the final images (so far)!
+  Lets finally blend them together. After sizing a final canvas to fit both images, I can use the alpha masks to blend together the two images. For these images, a weighted average (feathering) seems to work well enough, so further refinements were not attempted. Here are the final images using BL interpolation!
   <br>
   Golden Gate Bridge: <br>
-  <img src="./media/bridge_1.HEIC" style="max-height: 300px; width: auto;">  <img src="./media/bridge_3.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/bridge_panorama.png" style="max-height: 300px; width: auto;">  <br>
+  <img src="./media/bridge_1.HEIC" style="max-height: 300px; width: auto;">  <img src="./media/bridge_3.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/bridge_panorama_BL.png" style="max-height: 300px; width: auto;">  <br>
   <br>
   <br>
   McCone Balcony #1: <br>
-  <img src="./media/mccone_1.HEIC" style="max-height: 300px; width: auto;">  <img src="./media/mccone_3.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/balcony_panorama.png" style="max-height: 300px; width: auto;">  <br>
+  <img src="./media/mccone_1.HEIC" style="max-height: 300px; width: auto;">  <img src="./media/mccone_3.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/balcony_panorama_BL.png" style="max-height: 300px; width: auto;">  <br>
   <br>
   <br>
   McCone Balcony #2: <br>
