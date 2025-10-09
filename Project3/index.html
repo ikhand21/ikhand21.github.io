@@ -18,21 +18,21 @@
   <br>
   <br>
   Golden Gate Bridge: <br>
-	<img src="./media/bridge_1.HEIC" style="max-height: 200px; width: auto;"> 
-	<img src="./media/bridge_2.HEIC" style="max-height: 200px; width: auto;"> 
-	<img src="./media/bridge_3.HEIC" style="max-height: 200px; width: auto;">
-	<img src="./media/bridge_4.HEIC" style="max-height: 200px; width: auto;">
-	<img src="./media/bridge_5.HEIC" style="max-height: 200px; width: auto;">
-	<img src="./media/bridge_6.HEIC" style="max-height: 200px; width: auto;">
+	<img src="./media/bridge_1.HEIC" style="max-height: 180px; width: auto;"> 
+	<img src="./media/bridge_2.HEIC" style="max-height: 180px; width: auto;"> 
+	<img src="./media/bridge_3.HEIC" style="max-height: 180px; width: auto;">
+	<img src="./media/bridge_4.HEIC" style="max-height: 180px; width: auto;">
+	<img src="./media/bridge_5.HEIC" style="max-height: 180px; width: auto;">
+	<img src="./media/bridge_6.HEIC" style="max-height: 180px; width: auto;">
   <br>
   <br>
   View from McCone Balcony: <br>
-	<img src="./media/mccone_1.HEIC" style="max-height: 200px; width: auto;"> 
-	<img src="./media/mccone_2.HEIC" style="max-height: 200px; width: auto;"> 
-	<img src="./media/mccone_3.HEIC" style="max-height: 200px; width: auto;">
-	<img src="./media/mccone_4.HEIC" style="max-height: 200px; width: auto;">
-	<img src="./media/mccone_5.HEIC" style="max-height: 200px; width: auto;">
-	<img src="./media/mccone_6.HEIC" style="max-height: 200px; width: auto;">
+	<img src="./media/mccone_1.HEIC" style="max-height: 180px; width: auto;"> 
+	<img src="./media/mccone_2.HEIC" style="max-height: 180px; width: auto;"> 
+	<img src="./media/mccone_3.HEIC" style="max-height: 180px; width: auto;">
+	<img src="./media/mccone_4.HEIC" style="max-height: 180px; width: auto;">
+	<img src="./media/mccone_5.HEIC" style="max-height: 180px; width: auto;">
+	<img src="./media/mccone_6.HEIC" style="max-height: 180px; width: auto;">
   <br>
 </p>
 
@@ -43,8 +43,8 @@
   To recover H, we need atleast 4 correspondences between p and p'. For now, I will be establishing the correspondences by hand. 
   To reduce error, I will be selecting far more than 4. Since this is an overdetermined system of equations, I will use Least Squares to find the best solution using all the points. 
   The system of equations for n correspondences follows the format Ah = b, where A is a matrix of form (2n, 8), where each set of two rows sets the equation for the corresponding (x, y) pairs of a correspondence. 
-  h is an (8, 1) vector for each of the eight values we need to determine in H. b is (2n, 1), holding the respective x' and y'. The full form is below: 
-  <img src="TODO (from ipad)" style="max-height: 300px; width: auto;">
+  h is an (8, 1) vector for each of the eight values we need to determine in H. b is (2n, 1), holding the respective x' and y'. The full form and derivation is below: 
+  <img src="./media/syst_eq.jpg" style="max-height: 180px; width: auto;">
   <br>
   <br>
   Lets see how this works out for select pairs of photos from my two sets: 
@@ -68,11 +68,11 @@
 <ul>
 	<li>
   	Correspondences: <br>
-    <img src="TODO: correspondences" style="max-height: 300px; width: auto;">
+    <img src="./media/Screenshot 2025-10-08 174805.png" style="max-height: 300px; width: auto;"> <img src="./media/Screenshot 2025-10-08 174915.png" style="max-height: 300px; width: auto;">
   </li>
   <li>
   	Final Homography: <br>
-    <img src="TODO: homography" style="max-height: 300px; width: auto;">
+    <img src="./media/mccone_matrix.png" style="max-height: 180px; width: auto;">
   </li>
 </ul>
 
@@ -85,8 +85,8 @@
   <br>
   I tested this code and both forms of interpolation by 'rectifying' images with warped squares/rectangles. Here is how that turned out:
   <br>
-  Ice_cream Plate: <br>
-  <img src="TODO icecream square" style="max-height: 300px; width: auto;">
+  Ice_cream Plate: the plate and the chocolate sauce on the plate transformed clearly, compared to everything else, which makes sense. <br>
+  <img src="./media/IMG_8694.jpg" style="max-height: 300px; width: auto;"> <img src="./media/warped_ice.png" style="max-height: 300px; width: auto;">
   <br>
   Another One: <br>
   <img src="TODO another one" style="max-height: 300px; width: auto;">
