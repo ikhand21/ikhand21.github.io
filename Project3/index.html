@@ -7,9 +7,9 @@
 </head>
 <body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
 <center>
-<h1>Image Warping and Mosaicing</h1>
+<h1>Photo Mosaics</h1>
 </center>
-
+<h3>Part A: Image Warping and Mosaicing </h3>
 <h3>Part A.1: Pictures with the same Center of Projection </h3>
 
 <p class="text">
@@ -120,5 +120,65 @@
   <img src="./media/mccone_5.HEIC" style="max-height: 300px; width: auto;">  <img src="./media/mccone_8.HEIC" style="max-height: 300px; width: auto;"> <img src="./media/mccone_panorama2.png" style="max-height: 300px; width: auto;">  <br>
   <br>
 </p> 
+
+<h2> Part B: Feature Matching for Autostitching </h2>
+<h3> Part B.1: Harris Corner Detection </h3>
+<p class="text">
+  To implement automatically finding correspondences, we first need to identify all corners in the images. We define corners as points where there is a drastic enough change in two directions. To do this, we use Harris Corner detector. To be more selective, we implement Adaptive Non-Maximal Suppression (ANMS), which fitlters out corners within a certain radius of a relative maximal corner. This guaantees that the remaining corners are still spread out evenly about the image. <br>
+	<br> Here is the code with all the original corners, with 500 selected randomly, and 500 selected with ANMS:
+	<br>
+	<img src="./media2/output.png" style="max-height: 300px; width: auto;"> <img src="./media2/random_corners.png" style="max-height: 300px; width: auto;"> <img src="./media2/anms_corners.png" style="max-height: 300px; width: auto;">  
+	<br>
+</p>
+<h3> Part B.2: Feature Descriptor Extraction </h3>
+<p class="text">
+	From each of these corners, we extract the feature descriptor by taking an 8x8 box centered around the center. For the sake of comparison we initially sample this over a 40x40 box and bias/gain-normalize the descriptors.   
+	<br> Here is a few example feature descriptors:
+	<br>
+	<img src="./media2/features.png" style="max-height: 300px; width: auto;"> 
+</p>
+<h3> Part B.3: Feature Matching </h3>
+<p class="text">
+	From each of these corners, we extract the feature descriptor by taking an 8x8 box centered around the center. For the sake of comparison we initially sample this over a 40x40 box and bias/gain-normalize the descriptors.   
+	<br> Here is a few example feature descriptors:
+	<br>
+	<img src="./media2/features.png" style="max-height: 300px; width: auto;"> 
+</p>
+<h3> Part B.3: Feature Matching </h3>
+<p class="text">
+	Now we need to find pairs of features that look similar and are thus likely to be good matches. For thresholding, use the simpler approach due to Lowe of thresholding on the ratio between the first and the second nearest neighbors.
+	For each mosaic below, the correspondences found from this are shown in blue. 
+</p>
+<h3> Part B.4: RANSAC for Robust Homography </h3>
+<p class="text">
+		We use 4-point RANSAC to compute robust homography estimates, with no outliers. For some number of iterations, we select four random points and compute tho homography. We then see how many outliers there are. We choose the set of points with the least outliers is chosen, and the homography is recomputed using least squares with the inliers. 
+	For each mosaic below, the correspondences found from this are shown in red.
+	<br>
+	Now lets look at these correspondences, and the final mosaics (left), in comparison to the manually matched mosaics (right)
+	<br>
+	<br>
+	Golden Gate Bridge:
+	<br>
+	<img src="./media2/compare_points_bridge.png" style="max-height: 300px; width: auto;"> 
+	<br>
+	<img src="./media2/blended_bridge.png" style="max-height: 300px; width: auto;"> <img src="./media/bridge_panorama_BL.png" style="max-height: 300px; width: auto;">
+	<br>
+	Mccone Balcony 1: (all points from Feature Matching were kept in RANSAC)
+	<br>
+	<img src="./media2/compare_points1.png" style="max-height: 300px; width: auto;"> 
+	<br>
+	<img src="./media2/blended1.png" style="max-height: 300px; width: auto;"> <img src="./media/balcony_panorama_BL.png" style="max-height: 300px; width: auto;">
+	<br>
+	Mccone Balcony 2:	
+	<br>
+	<img src="./media2/compare_points2.png" style="max-height: 300px; width: auto;"> 
+	<br>
+	<img src="./media2/blended2.png" style="max-height: 300px; width: auto;"> <img src="./media/mccone_panorama2.png" style="max-height: 300px; width: auto;">
+	<br>
+</body>
+</html>
+
+
+
   
   
