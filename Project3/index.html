@@ -139,13 +139,6 @@
 </p>
 <h3> Part B.3: Feature Matching </h3>
 <p class="text">
-	From each of these corners, we extract the feature descriptor by taking an 8x8 box centered around the center. For the sake of comparison we initially sample this over a 40x40 box and bias/gain-normalize the descriptors.   
-	<br> Here is a few example feature descriptors:
-	<br>
-	<img src="./media2/features.png" style="max-height: 300px; width: auto;"> 
-</p>
-<h3> Part B.3: Feature Matching </h3>
-<p class="text">
 	Now we need to find pairs of features that look similar and are thus likely to be good matches. For thresholding, use the simpler approach due to Lowe of thresholding on the ratio between the first and the second nearest neighbors.
 	For each mosaic below, the correspondences found from this are shown in blue. 
 </p>
