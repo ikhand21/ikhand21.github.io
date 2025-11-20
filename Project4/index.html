@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS180: Project 4</title>
+<link rel="StyleSheet" href="./files/style.css" type="text/css" media="all">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
+<center>
+<h1>Neural Radiance Field (NeRF!)</h1>
+</center>
+<h3>Part 1: Fit a Neural Field to a 2D Image </h3>
+<p class="text">
+  Lets create a neural field that can represent a 2D image and optimize that neural field to fit this image.
+  <br>
+  Model architecture: 
+</p>
+<ul>
+<ul>
+  <li>Number of Layers: 5</li>
+  <li>Width: 256 vs 128</li>
+  <li>Learning rate: 0.001</li>
+  <li>Max Positional Encoding Frequency: 10 vs 6</li>
+</ul>
+  <p class="text">
+  <br> <br>
+  Training Progression: Snapshots of the neural field during training: <br>
+  Image 1 (provided): <br>
+  <img src="images/test_image_iter_0.png" alt="Test image - iteration 0">
+  <img src="images/test_image_iter_100.png" alt="Test image - iteration 100">
+  <img src="images/test_image_iter_500.png" alt="Test image - iteration 500"> <br>
+  Peak Signal-to-Noise Ratio (PSNR) progression during training for : <br>
+  <img src="images/psnr_curve.png" alt="PSNR curve over iterations"> <br> <br>
+  Image 2 (custom): <br>
+  <img src="images/custom_image_iter_0.png" alt="Custom image - iteration 0">
+  <img src="images/custom_image_iter_100.png" alt="Custom image - iteration 100">
+  <img src="images/custom_image_iter_500.png" alt="Custom image - iteration 500">
+  <br>
+  <br>
+  Final Results: <br> 
+  </p>
+<table>
+  <tr>
+    <th>Width 256, Max PE 10</th>
+    <th>Width 256, Max PE 6</th>
+  </tr>
+  <tr>
+    <td><img src="images/final_w256_pe10.png" alt="Width 256, PE 10"></td>
+    <td><img src="images/final_w256_pe14.png" alt="Width 256, PE 6"></td>
+  </tr>
+  <tr>
+    <th>Width 128, Max PE 10</th>
+    <th>Width 128, Max PE 6</th>
+  </tr>
+  <tr>
+    <td><img src="images/final_w512_pe10.png" alt="Width 128, PE 10"></td>
+    <td><img src="images/final_w512_pe14.png" alt="Width 128, PE 6"></td>
+  </tr>
+</table>
+<p>
+
+  
+
