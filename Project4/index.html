@@ -20,17 +20,17 @@
   <li>Number of Layers: 5</li>
   <li>Width: 256 vs 128</li>
   <li>Learning rate: 0.001</li>
-  <li>Max Positional Encoding Frequency: 10 vs 6</li>
+  <li>Max Positional Encoding Frequency: 10 vs 4</li>
 </ul>
   <p class="text">
   <br> <br>
   Training Progression: Snapshots of the neural field during training: <br>
   Image 1 (provided): <br>
-  <img src="images/test_image_iter_0.png" alt="Test image - iteration 0">
-  <img src="images/test_image_iter_100.png" alt="Test image - iteration 100">
-  <img src="images/test_image_iter_500.png" alt="Test image - iteration 500"> <br>
+  <img src="media/model_256_10/iter_0.png" alt="Test image - iteration 0">
+  <img src="media/model_256_10/iter_100.png" alt="Test image - iteration 100">
+  <img src="media/model_256_10/iter_500.png" alt="Test image - iteration 500"> <br>  
   Peak Signal-to-Noise Ratio (PSNR) progression during training for : <br>
-  <img src="images/psnr_curve.png" alt="PSNR curve over iterations"> <br> <br>
+  <img src="media/model_256_10/PSNR.png" alt="PSNR curve over iterations"> <br> <br>
   Image 2 (custom): <br>
   <img src="images/custom_image_iter_0.png" alt="Custom image - iteration 0">
   <img src="images/custom_image_iter_100.png" alt="Custom image - iteration 100">
@@ -42,22 +42,23 @@
 <table>
   <tr>
     <th>Width 256, Max PE 10</th>
-    <th>Width 256, Max PE 6</th>
+    <th>Width 256, Max PE 4</th>
   </tr>
   <tr>
-    <td><img src="images/final_w256_pe10.png" alt="Width 256, PE 10"></td>
-    <td><img src="images/final_w256_pe14.png" alt="Width 256, PE 6"></td>
+    <td><img src="media/model_256_10/iter_1000.png" alt="Width 256, PE 10"></td>
+    <td><img src="media/model_256_4/iter_1000.png" alt="Width 256, PE 4"></td>
   </tr>
   <tr>
     <th>Width 128, Max PE 10</th>
-    <th>Width 128, Max PE 6</th>
+    <th>Width 128, Max PE 4</th>
   </tr>
   <tr>
-    <td><img src="images/final_w512_pe10.png" alt="Width 128, PE 10"></td>
-    <td><img src="images/final_w512_pe14.png" alt="Width 128, PE 6"></td>
+    <td><img src="media/model_128_10/iter_1000.png" alt="Width 128, PE 10"></td>
+    <td><img src="media/model_128_4/iter_1000.png" alt="Width 128, PE 4"></td>
   </tr>
 </table>
-<p>
-
+</ul>
+</body>
+</html>
   
 
