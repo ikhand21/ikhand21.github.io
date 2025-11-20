@@ -16,14 +16,13 @@
   Model architecture: 
 </p>
 <ul>
-<ul>
   <li>Number of Layers: 5</li>
   <li>Width: 256 vs 128</li>
   <li>Learning rate: 0.001</li>
   <li>Max Positional Encoding Frequency: 10 vs 4</li>
 </ul>
   <p class="text">
-  <br> <br>
+  <br>
   Training Progression: Snapshots of the neural field during training: <br>
   Image 1 (provided): <br>
   <img src="media/model_256_10/iter_0.png" alt="Test image - iteration 0">
@@ -57,7 +56,18 @@
     <td><img src="media/model_126_6/iter_1000.png" alt="Width 128, PE 4"></td>
   </tr>
 </table>
-</ul>
+<h3>Part 2: Fit a Neural Radiance Field from Multi-view Images </h3>
+<p class="text">
+  To do this, we first converts a pixel coordinate to a ray with origin and normalized direction.  
+  We can convert from pixel coordinates to camera coordinates using the camera's intrinsic matric K. Since the image is 2d, we do this by picking a ray that points to the world coordinate through the camera. 
+  For this transformation from camera to world coordinates, we use the extrinsics matrix. <br>
+  Now, we can sample sets of images to get the pixel colors, coordinates, ray origins and directions. I chose to sample M images, and then sample N // M rays from every image. 
+  On each of these rays, I sample 32 uniformly distanced set of points along the length. <br>
+  Below, I show what a visualization of this. The first is sampled from a set camera, while the second shows points sampled along multiple, with the colors loaded along the points. I could not get Viser to work with python notebooks, so I used ipyvolume. <br>
+  After having samples in 3D, I want to use the network to predict the density and color for those samples in 3D. 
+  So I created a MLP similar to Part 1, but with 3D coordinates and much deeper. <br>
+
+</p>
 </body>
 </html>
   
