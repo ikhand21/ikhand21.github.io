@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS180: Project 5</title>
+<link rel="StyleSheet" href="./files/style.css" type="text/css" media="all">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
+<center>
+<h1>Fun With Diffusion Models!</h1>
+</center>
+<h2>Part A: The Power of Diffusion Models!</h2>
+<p class="text">
+  To understand how diffusion models applications work, lets first play around with diffusion models, and implement diffusion sampling loops to create different visuals.    
+  <br>
+</p>
+<h3>Part 0: Setup</h3>
+<p class="text">
+  For this part of the project, I will be using the DeepFloyd IF diffusion model, a two stage model trained by Stability AI.
+  As a text-to-image model, DeepFloyd takes in text prompts in the form of prompt embeddings (high-dimentional vectors).
+  Here are some example images generated via text prompts: the first with 20 inference steps, and the second with 30. 
+  It seems like increasing the number of inference steps didn't improve the quality of the images; perhaps instead they got more contrived and further from the original intention. 
+  The longer prompts definitely struggled, perhaps with too many parts to try to match all of them. Instead, they would focus on specific aspects and ignore the rest.   
+  <br>
+  SEED: 73
+  <br>
+  <br>
+  TO DO Original Prompts 
+</p>
+<h3>Part 1: Sampling Loops</h3>
+<h4>1.1: Implementing the Forward Process</h4>
+<p class="text">
+  A key part of diffusion is the forward process, which takes a clean image and adds noise to it. Tis process is defined by the following process:
+  given a clean image, we produce a noisy image at timestep t by sampling from a Gaussian with mean and variance based on the noise coefficient and the clean image.
+  Greater time steps result in noisier images, as shown below, comparing the original to times 250, 500, and 750. 
+<br> <br>
+  TO DO Noising Campanile
+</p>
+<h4>1.2: Classical Denoising</h4>
+<p class="text">
+  Now to denoise these images, classical techniques don't nearly do the job well enough. Here is my attempt at applying gaussian blur filtering to denoise the above three noised images. 
+<br> <br>
+  TO DO Gaussian Denoise Campanile
+</p>
+<h4>1.3: One-Step Denoising</h4>
+<p class="text">
+  Instead, let's try using a pretrained diffusion model to denoise. We can use it to recover/estimate Gaussian noise from the image, which we can then remove. 
+  Here is, again, the original image, the noisy images, and finally the one-step denoised estimates of the original image at each time step. These are already much better than the classical technique. 
+<br> <br>
+  TO DO one-step denoise
+</p>
+<h4>1.4: Iterative Denoising</h4>
+<p class="text">  
+  As the noise increases, the performance of this gets worse. We can fix this by using the diffusion model to denoise iteratively. 
+  There's no need to iterte through all 1000 time steps of the model; I use a regular stride of 30. On the ith denoising step, from t, we are trying to get to smaller timestep t', to produce a less noisy image. 
+  We finally reach t = 0, which is the clean image. Below I have the image on every 5th loop of denoising, gradually becoming less noisy. I also show the original compared to the iteratively denoised final image, the one-step denoised version, and the gaussian blurred version. 
+  This definitely emphasizes how much better the iterative version is.  
+<br> <br>
+  TO DO iterative images
+</p>
+<h4>1.5: Diffusion Model Sampling</h4>
+<p class="text">
+  The iterative denoising function can also be used to generate images from scratch if I start with index 0, and pass in my noisy image as just random noise.
+  Here are 5 samples of this, prompted by "a high quality photo". These images don't look great and don't necessarily provide a cohesive concept. 
+<br> <br>
+  TO DO 5 images
+</p>
+<h4>1.6: Classifier-Free Guidance (CFG)</h4>
+<p class="text">
+  To improve upon the image generation quality, we can use CFG. To do this, we calculate our noise estimate via a conditional and an unconditional noise estimate. 
+  The strength of this is controlled by a scale, which I will set to 7. Five more samples of "a high quality photo" are shown below with this new process. 
+  <br> <br>
+  TO DO: CFG 5 samples
+</p>
+<h4>1.7: Image-to-image Translation</h4>
+<p class="text">
+  
+
+  
