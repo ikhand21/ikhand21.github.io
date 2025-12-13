@@ -80,20 +80,20 @@
   This is evident if we compare applying iterative denoising with CFG to the same image, but changing the starting index. A smaller starting index brngs the starting image closer to just noise. 
   Below I show this for increasing starting indices (or inversely noise levels) compared to the original image. 
   <br> <br>
-<img src="./media/hallucinate.jpg" style="max-height: 150px; width: auto;">
+<img src="./media/hallucinate.jpg" style="max-height: 400px; width: auto;">
 </p>
 <h4>1.7.1: Editing Hand-Drawn and Web Images</h4>
 <p class="text">
   This procedure works particularly well if we start with a nonrealistic image and project it onto the natural image manifold. Here are some examples, where the last two examples were hand drawn.
   <br> <br>
-<img src="./media/drawings.jpg">
+<img src="./media/drawings.jpg" style="max-height: 400px; width: auto;">
 </p>
 <h4>1.7.2: Inpainting</h4>
 <p class="text">
   We can use the same procedure to implement inpainting. Fist we specify a mask, outside of which the image remains the same (except for noise level).
   Everything inside the mask is replaced similarly to above. Here are three examples with the original image, the mask, and the final inpainted version. 
   <br><br>
-<img src="./media/inpaint.jpg" >
+<img src="./media/inpaint.jpg" style="max-height: 400px; width: auto;">
 
 </p>
 <h4>1.7.3 Text-Conditional Image-to-image Translation</h4>
@@ -102,7 +102,7 @@
   Noisier starting images result is images that look more like the prompt, while later noise levels look more like the original image, with some influence from the prompt. 
   Here are three examples of this process:
   <br> <br>
-<img src="./media/a_to_b.jpg">
+<img src="./media/a_to_b.jpg" style="max-height: 400px; width: auto;">
 </p>
 <h4>1.8 Visual Anagrams</h4>
 <p class="text">
@@ -110,14 +110,14 @@
   This requires flipping the image upside down before getting a noise estimate with a second prompt, flipping it again, and incorporating this into the final noise estimate.  
   Here are some attempted illusions:
   <br> <br>
-<img src="./media/flip.jpg">
+<img src="./media/flip.jpg" style="max-height: 400px; width: auto;">
 </p>
 <h4>1.9 Hybrid Images</h4>
 <p class="text">
   We can also create hybrid images through a very similar process. To combine the noise estimates from the two prompts, we filter one through a low pass filter, and the other through a high pass filter. To do this I used a gaussian blur of kernel size 33 and sigma 2
   Here are some attempted illusions of this kind:
    <br> <br>
-<img src="./media/combine.jpg">
+<img src="./media/combine.jpg" style="max-height: 400px; width: auto;">
 </p>
 <h2>Part B: Flow Matching from Scratch!!</h2>
 <p class="text">
@@ -137,28 +137,37 @@
   To actually train the denoiser, we can create the respective noisy image z from clean image x through z = x + σε, where ε ~ N(0, I).
   As σ increases, the images get noisier. We can see this below with the series of noisy images created with increasing σ.  
   <br> <br>
-  TO DO noising process
+  <img src="./media1/noising_process.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.2.1: Training</h4>
 <p class="text">
   Here, I have trained the denoiser to denoise noisy images with σ = 0.5 applied to a clean image. The training set used comes from the MNIST dataset, batched over 256, trained over 5 epochs. 
   Below are the results after the 1st and then the 5th epoch, as well as the training loss curve. 
   <br> <br>
-  TO DO 1st epoch, 5th epoch, training loss
+<img src="./media1/epoch1_1.2.1.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/epoch5_1.2.1.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/training_loss_1.2.1.jpg" style="max-height: 150px; width: auto;"> <br>
 </p>
 <h4>1.2.2: Out-of-Distribution Testing</h4>
 <p class="text">
   Now that its been trained on σ = 0.5, lets see how well it does for different noise levels. 
     <br> <br>
-  TO DO same image, different noise levels
+<img src="./media1/sigma0_1.2.2.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/sigma1_1.2.2.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/sigma2_1.2.2.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/sigma3_1.2.2.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/sigma4_1.2.2.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/sigma5_1.2.2.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.2.3: Denoising Pure Noise</h4>
 <p class="text">
   To make denoising a generative task, it should be able to denoise pure, random Gaussian noise. So now, the noisy image z will simply be set to ε ~ N(0, I). 
   For the same training process as 1.2.1, here are the results:
     <br> <br>
-  TO DO 1st epoch, 5th epoch, training loss
-  <br> TO DO What patterns do you observe in the generated outputs? What relationship, if any, do these outputs have with the training images (e.g., digits 0–9)? Why might this be happening?
+<img src="./media1/epoch1_1.2.3.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/epoch5_1.2.3.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/training_loss_1.2.3.jpg" style="max-height: 150px; width: auto;"> <br>
+TO DO What patterns do you observe in the generated outputs? What relationship, if any, do these outputs have with the training images (e.g., digits 0–9)? Why might this be happening?
 </p>
 <h3>Part 2: Training a Flow Matching Model</h3>
 <p class="text">
@@ -174,13 +183,15 @@
   Then, we can train the denoiser to predict the flow at this point. I used a batch size of 64, an initial learning rate of 1e-2, and an exponential learning rate decay scheduler.  
   Here is the training loss curve:
   <br> <br>
-  TO DO training loss
+<img src="./media1/training_loss_2.2.jpg" style="max-height: 150px; width: auto;"> 
 </p>
   <h4>2.3: Sampling from the UNet</h4>
 <p class="text">
   Now, I can use it for iterative denoising. Here are some results after the 1st, 5th, and 10th epoch. I got results that have some legible digits. 
 <br> <br>
-  TO DO epoch 1, 5, 10
+<img src="./media1/epoch1_2.2.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/epoch5_2.2.jpg" style="max-height: 150px; width: auto;"> <br>
+<img src="./media1/epoch10_2.2.jpg" style="max-height: 150px; width: auto;"> 
 </p>
   <h4>2.4: Adding Class-Conditioning to UNet</h4>
 <p class="text">
@@ -191,17 +202,22 @@
 <p class="text">
   Training is again quite similar, only with the conditioned vector and unconditioning added in. Here is the training loss:
 <br><br>
-  TO DO training loss
+<img src="./media1/training_loss_2.5.jpg" style="max-height: 150px; width: auto;"> 
 </p>
   <h4>2.6 Sampling from the UNet</h4>
 <p class="text">
   And again, here are some samples after  the 1st, 5th, and 10th epoch. 
   <br> <br>
-  TO DO epoch 1 5 10
+<img src="./media1/epoch1_2.5_1.jpg" style="max-height: 400px; width: auto;"> <br>
+<img src="./media1/epoch5_2.5_1.jpg" style="max-height: 400px; width: auto;"> <br>
+<img src="./media1/epoch10_2.5_1.jpg" style="max-height: 400px; width: auto;"> 
   <br> <br>
   I want to get rid of the learning rate scheduler, though. To compensate for this, I changed the learning rate from 1e-2 to 1e-4.
   Although the training loss varies more, the performance isn't especially worse. 
   <br> <br>
-  TO DO epoch 1, 5, 10 
+  <img src="./media1/training_loss_2.5_schedule.jpg" style="max-height: 150px; width: auto;"> <br>
+  <img src="./media1/epoch1_2.5_1_schedule.jpg" style="max-height: 150px; width: auto;"> <br>
+  <img src="./media1/epoch5_2.5_1_schedule.jpg" style="max-height: 150px; width: auto;"> <br>
+  <img src="./media1/epoch10_2.5_1_schedule.jpg" style="max-height: 150px; width: auto;"> 
 </p>
  
