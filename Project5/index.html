@@ -18,14 +18,16 @@
 <p class="text">
   For this part of the project, I will be using the DeepFloyd IF diffusion model, a two stage model trained by Stability AI.
   As a text-to-image model, DeepFloyd takes in text prompts in the form of prompt embeddings (high-dimentional vectors).
-  Here are some example images generated via text prompts: the first with 20 inference steps, and the second with 30. 
+  Here are some example images generated via text prompts: the first with 30 inference steps, and the second with 20. 
   It seems like increasing the number of inference steps didn't improve the quality of the images; perhaps instead they got more contrived and further from the original intention. 
   The longer prompts definitely struggled, perhaps with too many parts to try to match all of them. Instead, they would focus on specific aspects and ignore the rest.   
   <br>
   SEED: 73
   <br>
   <br>
-  TO DO Original Prompts 
+  <img src="./media/20_steps_0.png" style="max-height: 150px; width: auto;">
+  <img src="./media/30_steps_0.jpg" style="max-height: 150px; width: auto;">
+
 </p>
 <h3>Part 1: Sampling Loops</h3>
 <h4>1.1: Implementing the Forward Process</h4>
@@ -34,20 +36,20 @@
   given a clean image, we produce a noisy image at timestep t by sampling from a Gaussian with mean and variance based on the noise coefficient and the clean image.
   Greater time steps result in noisier images, as shown below, comparing the original to times 250, 500, and 750. 
 <br> <br>
-  TO DO Noising Campanile
+  <img src="./media/noising_1.1.png" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.2: Classical Denoising</h4>
 <p class="text">
   Now to denoise these images, classical techniques don't nearly do the job well enough. Here is my attempt at applying gaussian blur filtering to denoise the above three noised images. 
 <br> <br>
-  TO DO Gaussian Denoise Campanile
+  <img src="./media/gaussian.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.3: One-Step Denoising</h4>
 <p class="text">
   Instead, let's try using a pretrained diffusion model to denoise. We can use it to recover/estimate Gaussian noise from the image, which we can then remove. 
   Here is, again, the original image, the noisy images, and finally the one-step denoised estimates of the original image at each time step. These are already much better than the classical technique. 
 <br> <br>
-  TO DO one-step denoise
+  <img src="./media/one_step.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.4: Iterative Denoising</h4>
 <p class="text">  
@@ -56,21 +58,21 @@
   We finally reach t = 0, which is the clean image. Below I have the image on every 5th loop of denoising, gradually becoming less noisy. I also show the original compared to the iteratively denoised final image, the one-step denoised version, and the gaussian blurred version. 
   This definitely emphasizes how much better the iterative version is.  
 <br> <br>
-  TO DO iterative images
+<img src="./media/iterative.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.5: Diffusion Model Sampling</h4>
 <p class="text">
   The iterative denoising function can also be used to generate images from scratch if I start with index 0, and pass in my noisy image as just random noise.
   Here are 5 samples of this, prompted by "a high quality photo". These images don't look great and don't necessarily provide a cohesive concept. 
 <br> <br>
-  TO DO 5 images
+<img src="./media/create_im.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.6: Classifier-Free Guidance (CFG)</h4>
 <p class="text">
   To improve upon the image generation quality, we can use CFG. To do this, we calculate our noise estimate via a conditional and an unconditional noise estimate. 
   The strength of this is controlled by a scale, which I will set to 7. Five more samples of "a high quality photo" are shown below with this new process. 
   <br> <br>
-  TO DO: CFG 5 samples
+<img src="./media/create_im2.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.7: Image-to-image Translation</h4>
 <p class="text">
@@ -78,28 +80,20 @@
   This is evident if we compare applying iterative denoising with CFG to the same image, but changing the starting index. A smaller starting index brngs the starting image closer to just noise. 
   Below I show this for increasing starting indices (or inversely noise levels) compared to the original image. 
   <br> <br>
-  TO DO hallucinating series
+<img src="./media/hallucinate.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.7.1: Editing Hand-Drawn and Web Images</h4>
 <p class="text">
   This procedure works particularly well if we start with a nonrealistic image and project it onto the natural image manifold. Here are some examples, where the last two examples were hand drawn.
   <br> <br>
-  TO DO series house
-  <br> <br>
-  TO DO series doodle 1
-  <br> <br>
-  TO DO series doodle 2
+<img src="./media/drawings.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.7.2: Inpainting</h4>
 <p class="text">
   We can use the same procedure to implement inpainting. Fist we specify a mask, outside of which the image remains the same (except for noise level).
   Everything inside the mask is replaced similarly to above. Here are three examples with the original image, the mask, and the final inpainted version. 
-  <br> <br>
-  TO DO series inpaint campanile
-  <br> <br>
-  TO DO series shopping cart
-  <br> <br>
-  TO DO series spiky thing
+<img src="./media/inpaint.jpg" style="max-height: 150px; width: auto;">
+
 </p>
 <h4>1.7.3 Text-Conditional Image-to-image Translation</h4>
 <p class="text">
@@ -107,11 +101,7 @@
   Noisier starting images result is images that look more like the prompt, while later noise levels look more like the original image, with some influence from the prompt. 
   Here are three examples of this process:
   <br> <br>
-  TO DO series hallucinate weirder 1
-  <br> <br>
-  TO DO series hallucinate weirder 2
-  <br> <br>
-  TO DO series hallucinate weirder 3
+<img src="./media/a_to_b.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.8 Visual Anagrams</h4>
 <p class="text">
@@ -119,14 +109,14 @@
   This requires flipping the image upside down before getting a noise estimate with a second prompt, flipping it again, and incorporating this into the final noise estimate.  
   Here are some attempted illusions:
   <br> <br>
-  TO DO visual anagram (flip upside down)
+<img src="./media/flip.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h4>1.9 Hybrid Images</h4>
 <p class="text">
   We can also create hybrid images through a very similar process. To combine the noise estimates from the two prompts, we filter one through a low pass filter, and the other through a high pass filter. To do this I used a gaussian blur of kernel size 33 and sigma 2
   Here are some attempted illusions of this kind:
    <br> <br>
-  TO DO hybrid images (flip upside down)
+<img src="./media/combine.jpg" style="max-height: 150px; width: auto;">
 </p>
 <h2>Part B: Flow Matching from Scratch!!</h2>
 <p class="text">
