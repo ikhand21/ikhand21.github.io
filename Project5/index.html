@@ -25,7 +25,7 @@
   SEED: 73
   <br>
   <br>
-  <img src="./media/20_steps_0.png" style="max-height: 150px; width: auto;">
+  <img src="./media/20_steps_0.png" style="max-height: 150px; width: auto;"> <br>
   <img src="./media/30_steps_0.jpg" style="max-height: 150px; width: auto;">
 
 </p>
@@ -86,13 +86,14 @@
 <p class="text">
   This procedure works particularly well if we start with a nonrealistic image and project it onto the natural image manifold. Here are some examples, where the last two examples were hand drawn.
   <br> <br>
-<img src="./media/drawings.jpg" style="max-height: 150px; width: auto;">
+<img src="./media/drawings.jpg">
 </p>
 <h4>1.7.2: Inpainting</h4>
 <p class="text">
   We can use the same procedure to implement inpainting. Fist we specify a mask, outside of which the image remains the same (except for noise level).
   Everything inside the mask is replaced similarly to above. Here are three examples with the original image, the mask, and the final inpainted version. 
-<img src="./media/inpaint.jpg" style="max-height: 150px; width: auto;">
+  <br><br>
+<img src="./media/inpaint.jpg" >
 
 </p>
 <h4>1.7.3 Text-Conditional Image-to-image Translation</h4>
@@ -101,7 +102,7 @@
   Noisier starting images result is images that look more like the prompt, while later noise levels look more like the original image, with some influence from the prompt. 
   Here are three examples of this process:
   <br> <br>
-<img src="./media/a_to_b.jpg" style="max-height: 150px; width: auto;">
+<img src="./media/a_to_b.jpg">
 </p>
 <h4>1.8 Visual Anagrams</h4>
 <p class="text">
@@ -109,14 +110,14 @@
   This requires flipping the image upside down before getting a noise estimate with a second prompt, flipping it again, and incorporating this into the final noise estimate.  
   Here are some attempted illusions:
   <br> <br>
-<img src="./media/flip.jpg" style="max-height: 150px; width: auto;">
+<img src="./media/flip.jpg">
 </p>
 <h4>1.9 Hybrid Images</h4>
 <p class="text">
   We can also create hybrid images through a very similar process. To combine the noise estimates from the two prompts, we filter one through a low pass filter, and the other through a high pass filter. To do this I used a gaussian blur of kernel size 33 and sigma 2
   Here are some attempted illusions of this kind:
    <br> <br>
-<img src="./media/combine.jpg" style="max-height: 150px; width: auto;">
+<img src="./media/combine.jpg">
 </p>
 <h2>Part B: Flow Matching from Scratch!!</h2>
 <p class="text">
