@@ -167,16 +167,14 @@
     <br> <br>
 <img src="./media1/epoch1_1.2.3.jpg" style="max-height: 150px; width: auto;"> <br>
 <img src="./media1/epoch5_1.2.3.jpg" style="max-height: 150px; width: auto;"> <br>
-TO DO training loss curve  
-TO DO What patterns do you observe in the generated outputs? What relationship, if any, do these outputs have with the training images (e.g., digits 0–9)? Why might this be happening?
-</p>
+All of the resulting denoised products look nearly exactly the same: some blurred combination of a 3 and a 0. This makes sense, since with purely random noise, averaging across many different digits smooths out sharp features. 0, and to a lesser degree any curved digits, is about as symmetric as it gets, so minimizing the sum of squared distances to all training examples looks most like this.  </p>
 <h3>Part 2: Training a Flow Matching Model</h3>
 <p class="text">
   Evidently, one-step denoising does not work well to generate images. Instead I need to iteratively denoise the image by training a UNet model to predict the `flow' from our noisy data to clean data. 
   Flow from a noisy image x0 to clean image x1 can be thought of as the velocity of a point x at time t, which can be approximated as x1 - x0 for change in time totalling to 1. 
 <h4>2.1: Adding Time Conditioning to UNet</h4>
 <p class="text">
-  TO do this, we need to inject t into the previous set up of the model to condition it. 
+  To do this, we need to inject t into the previous set up of the model to condition it. 
 </p>
   <h4>2.2: Training the UNet</h4>
 <p class="text">
